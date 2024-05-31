@@ -1,15 +1,14 @@
 #include <stdio.h>
-#define MAXIMUM_SIZE 8
+#define MAXIMUM_SIZE 10
 
-//calculate the determinant of matrix
-int Determinant(int matrix[MAXIMUM_SIZE][MAXIMUM_SIZE], int size) {
-    int determinant = 0;
+float Determinant(float matrix[MAXIMUM_SIZE][MAXIMUM_SIZE], int size) {
+    float determinant = 0;
     if (size == 1) {
         return matrix[0][0];
     } else if (size == 2) {
         return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
     } else {
-        int submatrix[MAXIMUM_SIZE][MAXIMUM_SIZE];
+        float submatrix[MAXIMUM_SIZE][MAXIMUM_SIZE];
         for (int k = 0; k < size; k++) {
             int subrow = 0;
             for (int i = 1; i < size; i++) {
@@ -30,9 +29,8 @@ int Determinant(int matrix[MAXIMUM_SIZE][MAXIMUM_SIZE], int size) {
     }
 }
 
-// Function to calculate the minor of a matrix element
-int Minor(int matrix[MAXIMUM_SIZE][MAXIMUM_SIZE], int row, int col, int size) {
-    int submatrix[MAXIMUM_SIZE][MAXIMUM_SIZE];
+float Minor(float matrix[MAXIMUM_SIZE][MAXIMUM_SIZE], int row, int col, int size) {
+    float submatrix[MAXIMUM_SIZE][MAXIMUM_SIZE];
     int subrow = 0;
     for (int i = 0; i < size; i++) {
         if (i == row) {
@@ -48,8 +46,7 @@ int Minor(int matrix[MAXIMUM_SIZE][MAXIMUM_SIZE], int row, int col, int size) {
         }
         subrow++;
     }
-    // Calculate determinant of the sub matrix
-    int determinant = Determinant(submatrix, size - 1);
+    float determinant = Determinant(submatrix, size - 1);
     return determinant;
 }
 
@@ -62,17 +59,13 @@ int main() {
         printf("Invalid matrix size.\n");
         return 1;
     }
-
     int matrix[MAXIMUM_SIZE][MAXIMUM_SIZE];
-
-
     printf("Enter the elements of the %dx%d matrix:\n", size, size);
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
-            scanf("%d", &matrix[i][j]);
+            scanf("%f", &matrix[i][j]);
         }
     }
-
     int row, col;
     printf("Enter the row index and column index for  calculate the minor & cofactor: ");
     scanf("%d %d", &row, &col);
@@ -81,12 +74,11 @@ int main() {
         printf("Invalid index.\n");
         return 1;
     }
-
     // Calculate  minor and cofactor
-    int minor = Minor(matrix, row - 1, col - 1, size);
-    int cofactor = minor * (((row + col) % 2 == 0) ? 1 : -1);
-    printf("The minor of the element in position [%d, %d] is: %d \n", row, col,minor);
-    printf("The cofactor of the element in position [%d, %d] is: %d \n", row, col,cofactor);
+    float minor = Minor(matrix, row - 1, col - 1, size);
+    float cofactor = minor * (((row + col) % 2 == 0) ? 1 : -1);
+    printf("The minor of the element in position [%d, %d] is: %.2f \n", row, col,minor);
+    printf("The cofactor of the element in position [%d, %d] is: %.2f \n", row, col,cofactor);
 
     return 0;
 }
